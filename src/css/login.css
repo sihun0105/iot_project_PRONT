@@ -1,0 +1,51 @@
+
+body{
+  height:100%;
+}body {
+    background-color: #F5F5F5;
+    margin:0;
+    height:100%;
+  }
+  .App {
+    text-align: center;
+  }
+  
+  .login-container { 
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+  }
+  
+  .logo {
+    width: 150px;
+    height: 161.07px;
+    margin-bottom: 20px;
+  }
+  
+  .input-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .input-field {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 360px;
+    height: 48px;
+  }
+  
+  .login-button {
+    background-color: #9687ed;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 180px;
+    height: 60px;
+  }
+  
