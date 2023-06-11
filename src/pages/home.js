@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import swal from 'sweetalert';
-
+import { useNavigate } from "react-router";
+import userSlice from "../slice/user";
 const Home = () => {
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState([]);
   const userEmail = useSelector((state) => state.user.email);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -71,7 +74,6 @@ const Home = () => {
     axios
       .delete(`http://localhost:2005/comments/${commentId}`)
       .then((response) => {
-        // 삭제 성공 시 처리할 코드를 작성해주세요
         fetchComments(selectedMovie.movieCd);
         swal('삭제되었습니다!', { icon: 'success' });
       })
@@ -80,9 +82,26 @@ const Home = () => {
       });
   };
 
+  const handleLogout = () => {
+    axios
+      .post('http://localhost:2005/auth/logout')
+      .then((response) => {
+        dispatch(
+          userSlice.actions.setUser({
+            email: '',
+          })
+        );
+        navigate("/login");
+      })
+      .catch((error) => {
+        console.error('Error logging out:', error);
+      });
+  };
+
   return (
     <div style={{ backgroundColor: '#9687ed', padding: '20px' }}>
       <h1 style={{ color: '#fff', textAlign: 'center', marginBottom: '30px', fontSize: '36px', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)' }}>Movie List</h1>
+      <button onClick={handleLogout} style={{ position: 'absolute', top: '10px', right: '10px', backgroundColor: '#9687ed', color: '#fff', border: 'none', padding: '10px 20px', borderRadius: '5px', cursor: 'pointer' }}>로그아웃</button>
       {selectedMovie ? (
         <div style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '20px', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)' }}>
           <h2 style={{ color: '#9687ed', fontSize: '28px', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '1px' }}>{selectedMovie.title}</h2>
