@@ -20,7 +20,7 @@ function Login() {
     try {
       const response = await axios.post(
         `${
-            "http://localhost:2005"
+          "http://localhost:2005"
         }/auth/login`,
         {
           email: email,
@@ -30,8 +30,8 @@ function Login() {
           withCredentials: true,
         }
       );
-        console.log(response.status)
-      if (response.status==200) {
+      console.log(response.status);
+      if (response.status == 200) {
         dispatch(
           userSlice.actions.setUser({
             email: response.data.email,
@@ -46,8 +46,12 @@ function Login() {
     }
   };
 
+  const handleSignUp = () => {
+    navigate("/signup");
+  };
+
   return (
-    <div className="App" style={{ backgroundColor: "#F5F5F5" }}>
+    <div className="App">
       <div className="login-container">
         <h2>로그인</h2>
         <div className="input-container">
@@ -69,9 +73,13 @@ function Login() {
             />
             <br />
             <button type="submit" className="login-button">
-              Login
+              <span>로그인</span>
             </button>
           </form>
+          <br />
+          <button onClick={handleSignUp} className="login-button signup-button">
+            회원가입
+          </button>
         </div>
       </div>
     </div>

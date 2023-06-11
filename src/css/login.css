@@ -37,7 +37,6 @@ body{
     width: 360px;
     height: 48px;
   }
-  
   .login-button {
     background-color: #9687ed;
     color: white;
@@ -47,5 +46,25 @@ body{
     cursor: pointer;
     width: 180px;
     height: 60px;
+    margin-right: 10px;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 18px;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
+  }
+  
+  .login-button:hover {
+    background-color: #7e6ac9;
+  }
+  
+  .login-button span {
+    margin-right: 5px;
+  }
+  
+  .signup-button {
+    align-self: center;
+    margin-top: 10px;
   }
   
