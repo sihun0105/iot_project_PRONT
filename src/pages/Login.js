@@ -47,7 +47,7 @@ function Login() {
   };
 
   const handleSignUp = () => {
-    navigate("/registor");
+    navigate("/register");
   };
 
   return (

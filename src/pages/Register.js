@@ -41,7 +41,7 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-export default function Registor() {
+export default function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
