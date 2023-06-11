@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, redirect, Navigate } from "react-router-d
 import "./App.css";
 import Login from "./pages/Login";
 import Home from "./pages/home";
+import Registor from "./pages/Registor";
 
 function App() {
   
@@ -11,6 +12,7 @@ function App() {
           <>
             <Route path="login" element={<Login />} />
             <Route path="home" element={<Home />} />
+            <Route path="registor" element={<Registor />} />
             <Route path="/" element={<Navigate to="/login" />}/>
             <Route path="*" element={<Navigate to="/login" />}/>
           </>

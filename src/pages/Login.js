@@ -47,13 +47,13 @@ function Login() {
   };
 
   const handleSignUp = () => {
-    navigate("/signup");
+    navigate("/registor");
   };
 
   return (
     <div className="App">
       <div className="login-container">
-        <h2>로그인</h2>
+        <h2>Login</h2>
         <div className="input-container">
           <form onSubmit={handleSubmit}>
             <input
@@ -73,12 +73,12 @@ function Login() {
             />
             <br />
             <button type="submit" className="login-button">
-              <span>로그인</span>
+              <span>Login</span>
             </button>
           </form>
           <br />
           <button onClick={handleSignUp} className="login-button signup-button">
-            회원가입
+          Register
           </button>
         </div>
       </div>
