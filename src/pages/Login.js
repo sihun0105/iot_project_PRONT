@@ -32,6 +32,11 @@ function Login() {
       );
         console.log(response.status)
       if (response.status==200) {
+        dispatch(
+          userSlice.actions.setUser({
+            email: response.data.email,
+          })
+        );
         navigate("/home");
       } else {
         throw new Error("로그인에 실패했습니다.");
