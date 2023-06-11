@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import userSlice from '../slice/user';
 import swal from 'sweetalert';
 const Home = () => {
   const [movies, setMovies] = useState([]);
@@ -52,7 +51,7 @@ const Home = () => {
     const postData = {
       movieCd: selectedMovie.movieCd,
       content: comment,
-      userno: userEmail
+      email: userEmail
     };
 
     axios.post('http://localhost:2005/comments', postData)
@@ -87,7 +86,7 @@ const Home = () => {
           {comments?.map(comment => (
             <div key={comment._id}>
               <p>{comment.content}</p>
-              <p>작성자: {comment.userno}</p>
+              <p>작성자: {comment.email}</p>
               <hr />
             </div>
           ))}
