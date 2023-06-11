@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
+import { useSelector } from 'react-redux';
+import userSlice from '../slice/user';
+import swal from 'sweetalert';
 const Home = () => {
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [comment, setComment] = useState('');
-
+  const [comments, setComments] = useState([]);
+  const userEmail = useSelector((state) => state.user.email);
   useEffect(() => {
     const fetchMovies = async () => {
       try {
@@ -19,12 +22,26 @@ const Home = () => {
     fetchMovies();
   }, []);
 
-  const handleMovieClick = (movie) => {
+  const fetchComments = async (movieCd) => {
+    console.log(movieCd);
+    try {
+      const response = await axios.get('http://localhost:2005/comments', {
+      params: { movieCd: movieCd }
+    });
+      setComments(response.data.data);
+    } catch (error) {
+      console.error('Error fetching comments:', error);
+    }
+  };
+
+  const handleMovieClick = async (movie) => {
     setSelectedMovie(movie);
+    await fetchComments(movie.movieCd);
   };
 
   const handleBackClick = () => {
     setSelectedMovie(null);
+    setComments([]);
   };
 
   const handleCommentChange = (event) => {
@@ -35,17 +52,19 @@ const Home = () => {
     const postData = {
       movieCd: selectedMovie.movieCd,
       content: comment,
-      userno: 1, // 유저번호를 수정해주세요
+      userno: userEmail
     };
 
     axios.post('http://localhost:2005/comments', postData)
       .then(response => {
-        // 댓글 작성 성공 시 처리할 코드를 작성해주세요
+        // 댓글 작성 성공 시 댓글 목록을 업데이트합니다.
+        fetchComments(selectedMovie.movieCd);
+        swal("등록되었습니다!", { icon: "success" });
+      setComment('');
       })
       .catch(error => {
         console.error('Error posting comment:', error);
       });
-
     // 댓글 작성 후 필요한 처리를 추가해주세요
     // 예를 들어, 작성한 댓글을 화면에 표시하거나 댓글 목록을 업데이트할 수 있습니다
   };
@@ -64,6 +83,14 @@ const Home = () => {
             <textarea value={comment} onChange={handleCommentChange} style={{ width: '100%', minHeight: '100px', marginBottom: '10px' }} placeholder="댓글을 작성하세요" />
             <button type="button" onClick={handleCommentSubmit} style={{ backgroundColor: '#9687ed', color: '#fff', border: 'none', padding: '10px 20px', borderRadius: '5px', cursor: 'pointer' }}>댓글 작성</button>
           </form>
+          <h3>댓글 목록</h3>
+          {comments?.map(comment => (
+            <div key={comment._id}>
+              <p>{comment.content}</p>
+              <p>작성자: {comment.userno}</p>
+              <hr />
+            </div>
+          ))}
         </div>
       ) : (
         movies?.map(movie => (
